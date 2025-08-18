@@ -1,65 +1,109 @@
-An Akinator-style AI that guesses an anime character through a series of yes/no questions. This project is built as a Multi-Modal Communication Protocol (MCP) server, designed to be integrated with Puch AI a whatsapp AI agent.
 
-Features
-Decision Tree Logic: Uses scikit-learn to train a Decision Tree on an anime character dataset, providing an intelligent and efficient guessing mechanism.
+# Anime Akinator AI  
 
-Conversational Interface: The game's logic is exposed as a set of tools that can be consumed by conversational AI agents.
+An Akinator-style AI that guesses an anime character through a series of yes/no questions.  
+This project is built as a Multi-Modal Communication Protocol (MCP) server, designed to be integrated with Puch AI.
 
-State Management: A Pydantic model manages the game's state, including the remaining characters, questions asked, and the current position in the decision tree.
+---
 
-Easy Deployment: The FastMCP framework simplifies the process of creating and running a server, which can be exposed publicly using ngrok.
+## Features  
 
-Project Structure
-anime.csv: The dataset of anime characters used for training the model.
+- **Decision Tree Logic**:  
+  Uses scikit-learn to train a `DecisionTreeClassifier` on an anime character dataset for intelligent and efficient guessing.  
 
-anime_akinator_tools.py: Contains the core game logic, including the data loading, model training, and the MCP tools.
+- **Conversational Interface**:  
+  Game logic is exposed as a set of MCP tools that can be consumed by conversational AI agents.  
 
-mcp_server.py: The main script for running the MCP server locally.
+- **State Management**:  
+  A Pydantic model manages the game’s state, including remaining characters, questions asked, and current tree position.  
 
-requirements.txt: Lists all the necessary Python dependencies.
+- **Easy Deployment**:  
+  Built with FastMCP, allowing quick deployment and public exposure using ngrok.  
 
-Installation and Setup
-Clone the repository:
+---
 
+## Project Structure  
+
+```
+
+.
+├── anime.csv                # Dataset of anime characters
+├── anime\_akinator\_tools.py  # Core game logic (data, model, MCP tools)
+├── mcp\_server.py            # Main MCP server script
+├── requirements.txt         # Python dependencies
+└── .env                     # Environment variables (not committed)
+
+````
+
+---
+
+## Installation & Setup  
+
+### 1. Clone the Repository  
+```bash
 git clone [your-repository-url]
 cd [your-repository-name]
+````
 
-Install dependencies:
-It is recommended to use a virtual environment.
+### 2. Install Dependencies
 
+It’s recommended to use a virtual environment.
+
+```bash
 pip install -r requirements.txt
+```
 
-Prepare your environment variables:
-Create a .env file in the project root with the following variables. These are used by anime_akinator_tools.py and mcp_server.py.
+### 3. Prepare Environment Variables
 
+Create a `.env` file in the project root with the following values:
+
+```env
 MY_WHATSAPP_NUMBER=your_whatsapp_number
 TOKEN=your_security_token
 MCP_PORT=8000
 NGROK_AUTH_TOKEN=your_ngrok_auth_token
+```
 
-MY_WHATSAPP_NUMBER: Your WhatsApp number for validation.
+* `MY_WHATSAPP_NUMBER`: Your WhatsApp number for validation
+* `TOKEN`: A security token (optional, but recommended)
+* `MCP_PORT`: Port the server will run on
+* `NGROK_AUTH_TOKEN`: Authentication token from your [ngrok dashboard](https://dashboard.ngrok.com)
 
-TOKEN: A security token (optional, but good practice).
+### 4. Start the Server
 
-MCP_PORT: The port the server will run on.
-
-NGROK_AUTH_TOKEN: Your ngrok authentication token. You can find this on your ngrok dashboard.
-
-Start the server:
-Run the mcp_server.py script. It will prompt you to start ngrok manually and paste the forwarding URL.
-
+```bash
 python mcp_server.py
+```
 
-Follow the on-screen instructions to get the ngrok URL. The server will then start and be accessible at that URL.
+Follow the on-screen instructions to start ngrok and paste the forwarding URL.
+Your server will then be accessible via the provided URL.
 
-How It Works
-The game's flow is managed through three main tools:
+---
 
-start_game_tool: Called to begin a new game. It loads the anime.csv dataset, trains a new DecisionTreeClassifier, and returns the first question to the user.
+## How It Works
 
-answer_question_tool: Processes the user's response (yes, no, or don't know). It uses the decision tree to determine the next question or makes a guess if the possibilities are narrowed down. It also handles the logic for a user confirming or denying a guess.
+The game flow is powered by three main MCP tools:
 
-quit_game_tool: Ends the current game session, resetting the game state.
+* **`start_game_tool`**
+  Begins a new game by loading `anime.csv`, training the decision tree, and returning the first question.
 
-Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+* **`answer_question_tool`**
+  Handles user responses (`yes`, `no`, `don’t know`) and uses the tree to select the next question or make a guess.
+  Also manages confirmation or denial of guesses.
+
+* **`quit_game_tool`**
+  Ends the current game session and resets the state.
+
+---
+
+## Contributing
+
+Pull requests are welcome.
+For major changes, please open an issue first to discuss your ideas.
+
+---
+
+## License
+
+This project is open-source under the MIT License.
+
