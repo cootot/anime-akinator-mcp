@@ -1,0 +1,5 @@
+fastmcp
+pandas
+scikit-learn
+pyngrok
+python-dotenv
